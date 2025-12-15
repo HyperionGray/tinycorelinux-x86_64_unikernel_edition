@@ -9,7 +9,7 @@ Tiny Core Linux is an extremely minimal Linux distribution that epitomizes the "
 ## 1. The Limitations of Their Approach
 
 ### Not Turn-Key Ready
-- **Internet required**: Almost mandatory for initial setup, as most utilities must be downloaded as extensions
+- **Internet required**: Nearly mandatory for initial setup, as most utilities must be downloaded as extensions
 - **Manual configuration needed**: No installer wizard, help popups, or graphical configuration tools
 - **Not beginner-friendly**: Requires comfort with command line and Linux system administration
 
@@ -268,13 +268,18 @@ The custom `init` script (`corepure64/init`) handles:
 1. Initial proc filesystem mounting
 2. Build date from kernel parameters for time synchronization
 3. Backup device configuration from boot parameters
-4. Memory-based filesystem tuning (90% of RAM, with inodes calculated as 1/3 of available memory in KB, optimized for handling many small files)
+4. Memory-based filesystem tuning:
+   - Allocates 90% of available RAM
+   - Calculates inodes as 1/3 of available memory in KB
+   - Optimized for handling many small files
 5. Optional switch_root for tmpfs operation
 
 ### Backup/Restore System
 - Uses modified `filetool.sh` wrapper that runs the original filetool with sudo, simplifying privilege escalation
 - Configurable via `/opt/.filetool.lst` (files to backup) and `/opt/.xfiletool.lst` (files to exclude)
-- Supports both encrypted (.tgz.bfe using Blowfish encryption via the bcrypt tool) and plain (.tgz) backups
+- Supports two backup formats:
+  - Plain backups: `.tgz` (gzipped tar archive)
+  - Encrypted backups: `.tgz.bfe` (Blowfish encryption via the bcrypt tool)
 - Encryption key stored in `/etc/sysconfig/bfe` for protected backups
 - Automatic/manual restore at boot time from configured backup device
 

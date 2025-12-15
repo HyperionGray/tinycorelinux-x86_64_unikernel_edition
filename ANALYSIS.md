@@ -268,13 +268,13 @@ The custom `init` script (`corepure64/init`) handles:
 1. Initial proc filesystem mounting
 2. Build date from kernel parameters for time synchronization
 3. Backup device configuration from boot parameters
-4. Memory-based filesystem tuning (90% of RAM, with inodes calculated as 1/3 of available memory in KB to optimize for many small files)
+4. Memory-based filesystem tuning (90% of RAM, with inodes calculated as 1/3 of available memory in KB, optimized for handling many small files)
 5. Optional switch_root for tmpfs operation
 
 ### Backup/Restore System
 - Uses modified `filetool.sh` wrapper that runs the original filetool with sudo, simplifying privilege escalation
 - Configurable via `/opt/.filetool.lst` (files to backup) and `/opt/.xfiletool.lst` (files to exclude)
-- Supports both encrypted (.tgz.bfe using bcrypt blowfish encryption) and plain (.tgz) backups
+- Supports both encrypted (.tgz.bfe using Blowfish encryption via the bcrypt tool) and plain (.tgz) backups
 - Encryption key stored in `/etc/sysconfig/bfe` for protected backups
 - Automatic/manual restore at boot time from configured backup device
 

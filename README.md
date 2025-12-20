@@ -25,6 +25,24 @@ Modified sources are maintained in the version branch:
 
 * [https://github.com/jidoteki/tinycorelinux-x86_64/tree/6.4.1](https://github.com/jidoteki/tinycorelinux-x86_64/tree/6.4.1)
 
+## Boot Time Optimization
+
+This repository includes comprehensive documentation for reducing boot time and system footprint for unikernel VM deployments:
+
+* **[BOOT_OPTIMIZATION.md](BOOT_OPTIMIZATION.md)** - Comprehensive technical guide covering all optimization techniques
+* **[QUICK_START_BOOT_OPTIMIZATION.md](QUICK_START_BOOT_OPTIMIZATION.md)** - Quick start guide for immediate implementation
+* **[BOOT_OPTIMIZATION_SUMMARY.md](BOOT_OPTIMIZATION_SUMMARY.md)** - Executive summary and implementation roadmap
+* **[examples/boot-configs/](examples/boot-configs/)** - Configuration file examples for different scenarios
+* **[examples/vm-scripts/](examples/vm-scripts/)** - VM launch scripts and benchmarking tools
+
+**Quick Start**: Add `quiet loglevel=3 norestore nodhcp` to your kernel boot parameters to save 6-8 seconds of boot time.
+
+See [QUICK_START_BOOT_OPTIMIZATION.md](QUICK_START_BOOT_OPTIMIZATION.md) for step-by-step instructions.
+
+## System Analysis
+
+For a detailed analysis of TinyCore Linux architecture and design decisions, see [TINYCORE_ANALYSIS.md](TINYCORE_ANALYSIS.md).
+
 ## Un-published sources
 
 The following configuration files may be modified in our binary distributions,

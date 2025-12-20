@@ -7,7 +7,9 @@
 ::sysinit:/etc/init.d/rcS
 
 # Primary console
-tty1::respawn:/opt/jidoteki/tinyadmin/bin/network_setup.sh
+# Note: If you have custom setup scripts, replace this line with your script
+# Example: tty1::respawn:/opt/jidoteki/tinyadmin/bin/network_setup.sh
+tty1::respawn:/sbin/getty 38400 tty1
 
 # Additional TTYs for development/debugging
 tty2::respawn:/sbin/getty 38400 tty2

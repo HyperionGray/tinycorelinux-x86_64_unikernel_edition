@@ -60,9 +60,9 @@ benchmark_config() {
     # End time
     end=$(date +%s.%N)
     
-    # Calculate duration
-    duration=$(echo "$end - $start" | bc)
-    total=$(echo "$total + $duration" | bc)
+    # Calculate duration using awk (more portable than bc)
+    duration=$(awk "BEGIN {printf \"%.2f\", $end - $start}")
+    total=$(awk "BEGIN {printf \"%.2f\", $total + $duration}")
     
     echo "${duration}s"
     
@@ -70,8 +70,8 @@ benchmark_config() {
     sleep 1
   done
   
-  # Calculate average
-  avg=$(echo "scale=2; $total / $RUNS" | bc)
+  # Calculate average using awk
+  avg=$(awk "BEGIN {printf \"%.2f\", $total / $RUNS}")
   echo "  Average: ${avg}s"
   echo ""
 }

@@ -400,9 +400,9 @@ Start with TinyCore optimization (this guide). Consider unikernels (OSv, Unikraf
 ## Additional Resources
 
 ### Documentation
-- **TinyCore Linux:** http://tinycorelinux.net/
-- **TinyCore Forums:** http://forum.tinycorelinux.net/
-- **TinyCore Wiki:** http://wiki.tinycorelinux.net/
+- **TinyCore Linux:** https://tinycorelinux.net/
+- **TinyCore Forums:** https://forum.tinycorelinux.net/
+- **TinyCore Wiki:** https://wiki.tinycorelinux.net/
 
 ### Tools
 - **musl libc:** https://musl.libc.org/

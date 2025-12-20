@@ -26,9 +26,9 @@ rm -f /opt/.xfiletool.lst
 #!/bin/sh
 mount proc
 
-# Set the initial date
-export $(cat /proc/cmdline | tr ' ' '\n' | grep "^jido_builddate=")
-if [ ! -z ${jido_builddate-} ]; then
+# Set the initial date (with validation)
+jido_builddate=$(cat /proc/cmdline | tr ' ' '\n' | grep "^jido_builddate=" | cut -d= -f2)
+if [ ! -z "$jido_builddate" ] && [ "$jido_builddate" -eq "$jido_builddate" ] 2>/dev/null; then
   [ "$jido_builddate" -lt `/bin/date +%s` ] || /bin/date +%s -s @${jido_builddate}
 fi
 
@@ -367,8 +367,9 @@ int main(int argc, char *argv[]) {
     signal(SIGCHLD, signal_handler);
 
     // Configure network (simplified)
+    // Note: Validate interface existence in production code
     system("/sbin/ip link set lo up");
-    system("/sbin/ip link set eth0 up");
+    system("/sbin/ip link set eth0 up");  // Adjust interface name as needed
     // Uncomment for DHCP:
     // system("/sbin/udhcpc -i eth0 -b -q");
 

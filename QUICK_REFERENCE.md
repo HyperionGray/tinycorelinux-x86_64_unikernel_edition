@@ -466,7 +466,7 @@ qemu-system-x86_64 \
 - **BusyBox:** https://busybox.net/
 - **Linux Kernel:** https://kernel.org/
 - **Unikraft:** https://unikraft.org/
-- **OSv:** http://osv.io/
+- **OSv:** https://osv.io/
 
 ## Summary
 

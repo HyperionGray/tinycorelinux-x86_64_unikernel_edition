@@ -1,0 +1,19 @@
+# Example inittab for direct application execution
+# This configuration bypasses the traditional shell/getty approach
+# and launches applications directly for unikernel deployment
+
+# Boot-time system configuration/initialization script
+::sysinit:/etc/init.d/rcS
+
+# Direct application launch (replace getty with application launcher)
+# Uncomment and modify the following line for direct application execution:
+# tty1::respawn:/opt/unikernel-launcher.sh
+
+# Traditional single TTY (for debugging or shell access)
+tty1::respawn:/sbin/getty 38400 tty1
+
+# Shutdown handling
+::restart:/etc/init.d/rc.shutdown
+::restart:/sbin/init
+::ctrlaltdel:/sbin/reboot
+::shutdown:/etc/init.d/rc.shutdown

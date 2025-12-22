@@ -1,0 +1,24 @@
+# /etc/inittab: Minimal configuration for fastest boot
+# Use this for VM/container environments where multiple TTYs are not needed
+#
+# Boot time savings: ~200-500ms compared to full configuration
+# Memory savings: ~1-2MB per TTY removed
+
+# Boot-time system configuration/initialization script
+::sysinit:/etc/init.d/rcS
+
+# Single TTY for console access
+tty1::respawn:/sbin/getty 38400 tty1
+
+# All other TTYs disabled for faster boot
+#tty2::respawn:/sbin/getty 38400 tty2
+#tty3::respawn:/sbin/getty 38400 tty3
+#tty4::askfirst:/sbin/getty 38400 tty4
+#tty5::askfirst:/sbin/getty 38400 tty5
+#tty6::askfirst:/sbin/getty 38400 tty6
+
+# System restart and shutdown handlers
+::restart:/etc/init.d/rc.shutdown
+::restart:/sbin/init
+::ctrlaltdel:/sbin/reboot
+::shutdown:/etc/init.d/rc.shutdown

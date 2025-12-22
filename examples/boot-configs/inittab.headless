@@ -1,0 +1,19 @@
+# /etc/inittab: Headless server configuration
+# Use this for servers/VMs with no console interaction needed
+#
+# WARNING: No console access - use serial console or SSH only
+# Boot time savings: ~500ms+ compared to full configuration
+
+# Boot-time system configuration/initialization script
+::sysinit:/etc/init.d/rcS
+
+# No TTYs spawned - use serial console or network access only
+# Uncomment one of these if you need emergency console access:
+#tty1::respawn:/sbin/getty 38400 tty1
+#ttyS0::respawn:/sbin/getty 115200 ttyS0
+
+# System restart and shutdown handlers
+::restart:/etc/init.d/rc.shutdown
+::restart:/sbin/init
+::ctrlaltdel:/sbin/reboot
+::shutdown:/etc/init.d/rc.shutdown

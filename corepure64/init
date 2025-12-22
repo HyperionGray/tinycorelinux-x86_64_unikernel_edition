@@ -7,28 +7,12 @@ if [ ! -z ${jido_builddate-} ]; then
   [ "$jido_builddate" -lt `/bin/date +%s` ] || /bin/date +%s -s @${jido_builddate}
 fi
 
-# Set the backup_device
-export $(cat /proc/cmdline | tr ' ' '\n' | grep "^restore=")
-echo "$restore" > /etc/sysconfig/backup_device
-
-# Rename filetool wrapper
-mv /usr/bin/filetool.sh /usr/bin/filetool_orig.sh
-mv /usr/bin/filetool_wrapper.sh /usr/bin/filetool.sh
-
+# Enable multiple virtual terminals if requested
 grep -qw multivt /proc/cmdline && sed -i s/^#tty/tty/ /etc/inittab
-if ! grep -qw noembed /proc/cmdline; then
 
-  inodes=`grep MemFree /proc/meminfo | awk '{print $2/3}' | cut -d. -f1`
+# Set up RAM filesystem with optimized size for unikernel
+inodes=`grep MemFree /proc/meminfo | awk '{print $2/3}' | cut -d. -f1`
+mount / -o remount,size=90%,nr_inodes=$inodes
 
-  mount / -o remount,size=90%,nr_inodes=$inodes
-  umount proc
-  exec /sbin/init
-fi
 umount proc
-if mount -t tmpfs -o size=90% tmpfs /mnt; then
-  if tar -C / --exclude=mnt -cf - . | tar -C /mnt/ -xf - ; then
-    mkdir /mnt/mnt
-    exec /sbin/switch_root mnt /sbin/init
-  fi
-fi
 exec /sbin/init

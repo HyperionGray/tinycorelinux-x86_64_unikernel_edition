@@ -58,7 +58,7 @@ We welcome various types of contributions:
 
 To work with this project:
 
-1. Download TinyCore Linux 6.4.1 x86_64 from http://tinycorelinux.net/
+1. Download TinyCore Linux 6.4.1 x86_64 from https://tinycorelinux.net/
 2. Set up a development VM (QEMU recommended)
 3. Review the documentation in this repository:
    - BOOT_OPTIMIZATION.md

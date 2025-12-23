@@ -112,7 +112,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed contribution guidelines.
 ## Upstream Sources
 
 Pre-built binaries come from:
-- **TinyCore Linux Official**: http://tinycorelinux.net/
+- **TinyCore Linux Official**: https://tinycorelinux.net/
 - **Jidoteki OSS Repository**: https://opensource.jidoteki.com/tinycorelinux/x86_64/6.4.1/
 
 Source code for the base distribution:

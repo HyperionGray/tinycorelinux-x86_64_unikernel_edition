@@ -24,7 +24,7 @@ If you discover a security vulnerability in this project, please report it respo
 ### For TinyCore Linux Base System Issues
 
 Report to the upstream TinyCore Linux project:
-- **Forum**: http://forum.tinycorelinux.net/
+- **Forum**: https://forum.tinycorelinux.net/
 - **Mailing List**: Use the TinyCore Linux community channels
 
 ### For Remaster-Specific Issues
@@ -105,8 +105,8 @@ The aggressive optimization strategies reduce system size but may:
 
 ### Upstream Updates
 Monitor TinyCore Linux security announcements:
-- http://tinycorelinux.net/
-- http://forum.tinycorelinux.net/
+- https://tinycorelinux.net/
+- https://forum.tinycorelinux.net/
 
 ### This Repository
 Security-related updates to our modifications will be:

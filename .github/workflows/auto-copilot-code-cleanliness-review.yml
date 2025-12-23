@@ -94,6 +94,7 @@ jobs:
           
           echo "" >> /tmp/analysis.md
           cat /tmp/analysis.md
+        continue-on-error: true
 
       - name: Create Issue for Code Cleanliness Review
         uses: actions/github-script@main

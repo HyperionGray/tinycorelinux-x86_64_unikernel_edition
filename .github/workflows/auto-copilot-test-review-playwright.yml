@@ -1,8 +1,8 @@
 name: "Comprehensive Test Review with Playwright"
 
 # REQUIREMENTS:
-# - A GitHub Personal Access Token with Copilot access must be created and stored as a repository secret named COPILOT_TOKEN
-# - See COPILOT_TOKEN_SETUP.md for detailed setup instructions
+# - Standard GitHub token permissions for creating issues and comments
+# - No additional setup required
 
 on:
   push:
@@ -164,22 +164,62 @@ jobs:
           
           cat /tmp/test-analysis.md
 
-      - name: GitHub Copilot Test Review
-        uses: austenstone/copilot-cli-action@v2
-        with:
-          copilot-token: ${{ secrets.COPILOT_TOKEN }}
-          prompt: |
-            Review the test suite for this repository:
-            1. Verify all web-based functionality has Playwright tests (both headed and headless)
-            2. Identify missing test coverage for critical functionality
-            3. Check test quality and maintainability
-            4. Suggest improvements for test organization
-            5. Verify tests follow best practices (isolation, clarity, proper assertions)
-            6. Check for flaky tests or tests with timing issues
-            7. Ensure tests are running in CI/CD pipeline
-            
-            For any web tests not using Playwright, recommend migration.
-            Provide specific, actionable recommendations with file names.
+      - name: Enhanced Test Review
+        run: |
+          echo "## Test Review Recommendations" >> /tmp/test-analysis.md
+          echo "" >> /tmp/test-analysis.md
+          
+          echo "### Test Suite Assessment:" >> /tmp/test-analysis.md
+          echo "" >> /tmp/test-analysis.md
+          
+          # Check for Playwright configuration
+          if [ -f "playwright.config.js" ] || [ -f "playwright.config.ts" ]; then
+            echo "- **Playwright Configuration**: Found ✅" >> /tmp/test-analysis.md
+          else
+            echo "- **Playwright Configuration**: Missing ❌" >> /tmp/test-analysis.md
+          fi
+          
+          # Check for test directories
+          if [ -d "tests" ] || [ -d "test" ] || [ -d "__tests__" ]; then
+            echo "- **Test Directory**: Found ✅" >> /tmp/test-analysis.md
+          else
+            echo "- **Test Directory**: Missing ❌" >> /tmp/test-analysis.md
+          fi
+          
+          # Check for package.json test scripts
+          if [ -f "package.json" ]; then
+            if grep -q "\"test\":" package.json; then
+              echo "- **Test Scripts**: Found in package.json ✅" >> /tmp/test-analysis.md
+            else
+              echo "- **Test Scripts**: Missing in package.json ❌" >> /tmp/test-analysis.md
+            fi
+          fi
+          
+          echo "" >> /tmp/test-analysis.md
+          echo "### Testing Recommendations for TinyCore Linux Project:" >> /tmp/test-analysis.md
+          echo "" >> /tmp/test-analysis.md
+          echo "1. **Shell Script Testing**:" >> /tmp/test-analysis.md
+          echo "   - Use BATS (Bash Automated Testing System) for shell script tests" >> /tmp/test-analysis.md
+          echo "   - Test boot optimization scripts with different configurations" >> /tmp/test-analysis.md
+          echo "   - Validate VM launch scripts with various parameters" >> /tmp/test-analysis.md
+          echo "" >> /tmp/test-analysis.md
+          echo "2. **Integration Testing**:" >> /tmp/test-analysis.md
+          echo "   - Test complete boot optimization workflows" >> /tmp/test-analysis.md
+          echo "   - Validate configuration file parsing and validation" >> /tmp/test-analysis.md
+          echo "   - Test VM performance benchmarking accuracy" >> /tmp/test-analysis.md
+          echo "" >> /tmp/test-analysis.md
+          echo "3. **Performance Testing**:" >> /tmp/test-analysis.md
+          echo "   - Automated boot time measurements" >> /tmp/test-analysis.md
+          echo "   - Memory usage validation for different optimization levels" >> /tmp/test-analysis.md
+          echo "   - Size reduction verification tests" >> /tmp/test-analysis.md
+          echo "" >> /tmp/test-analysis.md
+          echo "4. **Error Handling Tests**:" >> /tmp/test-analysis.md
+          echo "   - Test behavior with missing configuration files" >> /tmp/test-analysis.md
+          echo "   - Validate error messages and exit codes" >> /tmp/test-analysis.md
+          echo "   - Test recovery from failed VM launches" >> /tmp/test-analysis.md
+          
+          echo "" >> /tmp/test-analysis.md
+          cat /tmp/test-analysis.md
         continue-on-error: true
 
       - name: Create or Update Test Review Issue

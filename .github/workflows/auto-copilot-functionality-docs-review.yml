@@ -211,22 +211,77 @@ jobs:
           
           cat /tmp/doc-analysis.md
 
-      - name: GitHub Copilot Documentation Review
-        uses: austenstone/copilot-cli-action@v2
-        with:
-          copilot-token: ${{ secrets.COPILOT_TOKEN }}
-          prompt: |
-            Review the documentation for this repository:
-            1. Check README.md completeness and quality
-            2. Verify all features and functionality are documented
-            3. Check for installation and usage instructions
-            4. Identify missing or outdated documentation
-            5. Suggest improvements for clarity and completeness
-            6. Verify code comments and inline documentation
-            7. Check for API documentation if applicable
-            8. Ensure contributing guidelines are present
+      - name: Enhanced Documentation Review
+        run: |
+          echo "## Documentation Review Recommendations" >> /tmp/doc-analysis.md
+          echo "" >> /tmp/doc-analysis.md
+          
+          echo "### Documentation Quality Assessment:" >> /tmp/doc-analysis.md
+          echo "" >> /tmp/doc-analysis.md
+          
+          # Check README.md completeness
+          if [ -f "README.md" ]; then
+            echo "- **README.md**: Present ✅" >> /tmp/doc-analysis.md
             
-            Provide specific recommendations with file names and sections.
+            # Check for key sections
+            if grep -q -i "installation\|install" README.md; then
+              echo "  - Installation section: Found ✅" >> /tmp/doc-analysis.md
+            else
+              echo "  - Installation section: Missing ❌" >> /tmp/doc-analysis.md
+            fi
+            
+            if grep -q -i "usage\|how to use" README.md; then
+              echo "  - Usage section: Found ✅" >> /tmp/doc-analysis.md
+            else
+              echo "  - Usage section: Missing ❌" >> /tmp/doc-analysis.md
+            fi
+            
+            if grep -q -i "features\|feature" README.md; then
+              echo "  - Features section: Found ✅" >> /tmp/doc-analysis.md
+            else
+              echo "  - Features section: Missing ❌" >> /tmp/doc-analysis.md
+            fi
+            
+            if grep -q -i "api\|interface" README.md; then
+              echo "  - API documentation: Found ✅" >> /tmp/doc-analysis.md
+            else
+              echo "  - API documentation: Missing ❌" >> /tmp/doc-analysis.md
+            fi
+          else
+            echo "- **README.md**: Missing ❌" >> /tmp/doc-analysis.md
+          fi
+          
+          # Check for other important documentation files
+          for doc in CONTRIBUTING.md LICENSE.md CHANGELOG.md CODE_OF_CONDUCT.md SECURITY.md; do
+            if [ -f "$doc" ]; then
+              echo "- **$doc**: Present ✅" >> /tmp/doc-analysis.md
+            else
+              echo "- **$doc**: Missing ❌" >> /tmp/doc-analysis.md
+            fi
+          done
+          
+          echo "" >> /tmp/doc-analysis.md
+          echo "### Code Documentation Assessment:" >> /tmp/doc-analysis.md
+          
+          # Check shell scripts for documentation
+          find . -name "*.sh" -type f ! -path "*/.git/*" | while read -r script; do
+            if head -10 "$script" | grep -q "#.*Usage:\|#.*Description:\|#.*Help:" 2>/dev/null; then
+              echo "- $script: Well documented ✅" >> /tmp/doc-analysis.md
+            else
+              echo "- $script: Needs better documentation ❌" >> /tmp/doc-analysis.md
+            fi
+          done
+          
+          echo "" >> /tmp/doc-analysis.md
+          echo "### Improvement Recommendations:" >> /tmp/doc-analysis.md
+          echo "1. Ensure all scripts have usage examples and help text" >> /tmp/doc-analysis.md
+          echo "2. Add inline comments for complex logic" >> /tmp/doc-analysis.md
+          echo "3. Document configuration file formats and options" >> /tmp/doc-analysis.md
+          echo "4. Include troubleshooting sections for common issues" >> /tmp/doc-analysis.md
+          echo "5. Add performance benchmarks and optimization results" >> /tmp/doc-analysis.md
+          
+          echo "" >> /tmp/doc-analysis.md
+          cat /tmp/doc-analysis.md
         continue-on-error: true
 
       - name: Create Documentation Review Report

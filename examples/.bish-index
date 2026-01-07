@@ -1,0 +1,10 @@
+./vm-scripts/benchmark-boot.sh
+./vm-scripts/README.md
+./vm-scripts/qemu-fast-boot.sh
+./vm-scripts/qemu-dev-boot.sh
+./vm-scripts/qemu-balanced-boot.sh
+./vm-scripts/qemu-server-boot.sh
+./boot-configs/README.md
+./boot-configs/bootsync.parallel.sh
+./boot-configs/bootsync.minimal.sh
+./boot-configs/bootsync.fast.sh

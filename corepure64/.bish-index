@@ -1,0 +1,3 @@
+./opt/bootlocal.sh
+./opt/bootsync.sh
+./opt/unikernel-launcher.sh

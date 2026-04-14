@@ -9,6 +9,116 @@ to the original and modified source code.
 
 ![Architecture](https://img.shields.io/badge/arch-x86__64-brightgreen.svg) ![Version](https://img.shields.io/badge/version-6.4.1-blue.svg)
 
+## Features
+
+This remastered TinyCore Linux distribution provides:
+
+* **Ultra-lightweight**: Minimal footprint perfect for microVM and container deployments
+* **Fast boot times**: Optimized to boot in under 2 seconds with proper configuration
+* **Unikernel-style deployment**: Designed for ephemeral, single-purpose VM instances
+* **Comprehensive optimization guides**: Detailed documentation for various use cases
+* **Flexible configuration**: Multiple optimization strategies from conservative to extreme
+* **x86_64 architecture**: Full 64-bit support for modern applications
+* **GPL v2 licensed**: Open source with complete source code availability
+
+### Optimization Capabilities
+
+| Approach | Size Reduction | Boot Time | Use Case |
+|----------|---------------|-----------|----------|
+| Conservative | 45% (20MB → 11MB) | <2s | Production systems |
+| Aggressive | 70% (20MB → 6MB) | <1s | Specialized deployments |
+| Extreme | 85% (20MB → 3MB) | <500ms | Single-purpose VMs |
+
+## Installation
+
+### Prerequisites
+
+- QEMU, VirtualBox, VMware, or other x86_64 hypervisor
+- At least 512MB RAM (256MB for minimal configurations)
+- x86_64 processor with virtualization support
+
+### Quick Start
+
+1. **Download the distribution files** from the repository or release page
+
+2. **For VM deployment**, use one of the provided scripts:
+   ```bash
+   # Fast boot configuration
+   ./examples/vm-scripts/qemu-fast-boot.sh
+   
+   # Balanced configuration
+   ./examples/vm-scripts/qemu-balanced-boot.sh
+   
+   # Development configuration
+   ./examples/vm-scripts/qemu-dev-boot.sh
+   ```
+
+3. **For custom deployment**, use the setup script:
+   ```bash
+   ./setup-unikernel.sh
+   ```
+
+### Manual Installation
+
+For manual setup or integration with existing infrastructure:
+
+1. Extract the distribution files
+2. Configure your bootloader with appropriate kernel parameters
+3. Mount the core filesystem (corepure64/)
+4. Apply optimization configurations from examples/boot-configs/
+
+See [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md) for detailed installation instructions.
+
+## Usage
+
+### Basic Usage
+
+**Launch with default configuration:**
+```bash
+qemu-system-x86_64 -m 512M -kernel vmlinuz64 -initrd corepure64.gz \
+  -append "quiet console=ttyS0"
+```
+
+**Launch with boot optimization:**
+```bash
+qemu-system-x86_64 -m 256M -kernel vmlinuz64 -initrd corepure64.gz \
+  -append "quiet loglevel=3 norestore nodhcp"
+```
+
+### Optimization Strategies
+
+**For fast boot times:**
+- Add `quiet loglevel=3 norestore nodhcp` to kernel parameters
+- Use minimal boot configuration from examples/boot-configs/
+- See [QUICK_START_BOOT_OPTIMIZATION.md](QUICK_START_BOOT_OPTIMIZATION.md)
+
+**For minimal footprint:**
+- Follow aggressive optimization guide in [UNIKERNEL_OPTIMIZATION.md](UNIKERNEL_OPTIMIZATION.md)
+- Remove unnecessary kernel modules
+- Strip non-essential services
+
+**For production deployment:**
+- Use conservative optimization approach
+- Enable appropriate logging
+- Configure persistent storage as needed
+
+### Configuration
+
+Key configuration files:
+- `/opt/bootlocal.sh` - Boot-time initialization script
+- `/opt/bootsync.sh` - Synchronous boot actions
+- `/opt/onboot.lst` - Extensions to load at boot
+- Kernel parameters - Boot optimization settings
+
+Example configurations are provided in `examples/boot-configs/` for various scenarios.
+
+### Benchmarking
+
+Measure your boot time:
+```bash
+./examples/vm-scripts/benchmark-boot.sh
+```
+
 ## Un-modified sources
 
 Un-modified sources are maintained in the master branch and in the Jidoteki OSS repo:
@@ -82,6 +192,15 @@ This repository includes comprehensive documentation for optimizing TinyCore Lin
 | Extreme | 85% (20MB → 3MB) | <500ms | High |
 
 See [UNIKERNEL_SUMMARY.md](UNIKERNEL_SUMMARY.md) for detailed recommendations.
+
+## Contributing
+
+We welcome contributions to this project! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on:
+
+- Reporting issues and bugs
+- Submitting enhancements and optimizations
+- Documentation improvements
+- Code style and testing requirements
 
 ## License
 
